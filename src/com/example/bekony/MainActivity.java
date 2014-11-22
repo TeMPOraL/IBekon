@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -23,34 +24,52 @@ public class MainActivity extends Activity {
     private static final int REQUEST_CODE_ENABLE_BLUETOOTH = 1;
 
     private BeaconManager beaconManager;
-
+    
+    private GameBeaconManager gameBeaconManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        gameBeaconManager = new GameBeaconManager();
+        gameBeaconManager.init((TextView)findViewById(R.id.hello));
+        System.out.println("YO!");
+        
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
-            public void onMonitorStart() {}
+            public void onMonitorStart() {
+            	System.out.println("onMonitorStart");
+            }
 
             @Override
-            public void onMonitorStop() {}
+            public void onMonitorStop() {
+            	System.out.println("onMonitorStop");
+            }
 
             @Override
-            public void onBeaconsUpdated(final Region region, final List<Beacon> beacons) {}
+            public void onBeaconsUpdated(final Region region, final List<Beacon> beacons) {
+            	gameBeaconManager.onBeaconUpdated(beacons);
+            	System.out.println("onBeaconsUpdated");
+            }
 
             @Override
-            public void onBeaconAppeared(final Region region, final Beacon beacon) {}
+            public void onBeaconAppeared(final Region region, final Beacon beacon) {
+            	gameBeaconManager.onBeaconAppeared(beacon);
+            }
 
             @Override
-            public void onRegionEntered(final Region region) {}
+            public void onRegionEntered(final Region region) {
+            	System.out.println("onRegionEntered");
+            }
 
             @Override
-            public void onRegionAbandoned(final Region region) {}
+            public void onRegionAbandoned(final Region region) {
+            	System.out.println("onRegionAbandoned");
+            }
         });
     }
     
