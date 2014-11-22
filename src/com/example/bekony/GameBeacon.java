@@ -19,9 +19,16 @@ public class GameBeacon {
 	}
 	
 	public void capturing() {
+		long now = android.os.SystemClock.elapsedRealtime();
 		if(state != GameBeaconState.IN_CAPTURE) {
 			state = GameBeaconState.IN_CAPTURE;
-			captureStartTime = android.os.SystemClock.elapsedRealtime();
+			captureStartTime = now;
+		}
+		else {
+			if(now - captureStartTime > GameState.BEACON_CAPTURE_TIMEOUT_MSEC) {
+				state = GameBeaconState.CAPTURED;
+				//send message to server
+			}
 		}
 	}
 	

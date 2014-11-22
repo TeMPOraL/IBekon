@@ -29,7 +29,7 @@ public class GameBeaconAdapter extends ArrayAdapter<GameBeacon> {
 		long timeSinceCaptured = 0;
 		
 		if(beacon.getState() == GameBeaconState.IN_CAPTURE) {
-			timeSinceCaptured = (android.os.SystemClock.elapsedRealtime() - beacon.captureStartTime) / 1000;	
+			timeSinceCaptured = (GameState.BEACON_CAPTURE_TIMEOUT_MSEC - (android.os.SystemClock.elapsedRealtime() - beacon.captureStartTime)) / 1000;	
 		}
 		
 		tvName.setText(beacon.beacon.getName() + " " + String.format("%.4f", beacon.beacon.getAccuracy()) + " (" + timeSinceCaptured + ") --- ");

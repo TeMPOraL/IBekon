@@ -40,10 +40,6 @@ public class MainActivity extends Activity {
         gameBeaconManager.init((TextView)findViewById(R.id.hello));
         System.out.println("YO!");
         
-        List<String> items = new ArrayList<String>();
-        items.add("Maka");
-        items.add("Paka");
-        
         final GameBeaconAdapter adapter = new GameBeaconAdapter(this, new ArrayList<GameBeacon>());
         ListView l = (ListView)findViewById(R.id.beaconView);
         l.setAdapter(adapter);
