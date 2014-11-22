@@ -51,7 +51,7 @@ public class GameBeacon {
 		if(canBeginCapture()) {
 			beginCapture();
 		}
-		if(now - captureStartTime > GameState.BEACON_CAPTURE_TIMEOUT_MSEC) {
+		if((now - captureStartTime > GameState.BEACON_CAPTURE_TIMEOUT_MSEC) && !(state == GameBeaconState.OWNED)) {
 			finalizeCapture();
 		}
 	}

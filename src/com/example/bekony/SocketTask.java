@@ -154,40 +154,63 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
         }catch(Exception e){
             Log.i("Err", e.toString());
         }
+      }
+    
+    public void sendLobby() {
+    	Log.i("SocketTask", "LOBBY");
+    	try {
+    		JSONObject obj = new JSONObject();
+    		JSONArray HARDCODED_BEACONS = new JSONArray();
+    		HARDCODED_BEACONS.put("CB:07:48:2C:2F:AB");
+    		HARDCODED_BEACONS.put("DD:99:6F:92:0E:DF");
+    		HARDCODED_BEACONS.put("DD:5D:BA:6E:B1:F7");
+    		HARDCODED_BEACONS.put("D0:15:D7:26:45:DC");
+    		HARDCODED_BEACONS.put("FD:C1:2B:94:05:7E");
+    		obj.put("beacons", HARDCODED_BEACONS);
+    		sendCommand("lobby_update", obj);
+    	}catch(Exception e) {
+    		Log.i("Err", e.toString());
+    	}
+    	sendGame();
+    }
+    
+    public void sendGame() {
+    	Log.i("SocketTask", "GAME");
+    	try {
+    		JSONObject obj = new JSONObject();
+    		sendCommand("game", obj);
+    	}catch(Exception e) {
+    		Log.i("Err", e.toString());
+    	}
     }
 
     public void recvJoinGameInfo(JSONObject obj) {
         Log.i("JOIN INFO", obj.toString());
-        Intent itent = new Intent(activity, GameActivity.class);
+//        Intent itent = new Intent(activity, GameActivity.class);
         try {
             gameId = obj.getJSONObject("response").getString("gameId");
             //TODO set settings
         }catch(JSONException e){};
-        if(!GameState.GAME_RUNNING) {
-        	activity.startActivity(itent);
-        }
-        else {
-        	GameState.resetGameStartTime();
-        }
+//        if(!GameState.GAME_RUNNING) {
+//        	activity.startActivity(itent);
+//        }
+//        else {
+  //      	GameState.resetGameStartTime();
+//        }
     }
 
     public void recvHostGameInfo(JSONObject obj) {
         Log.i("HOST INFO", obj.toString());
-        Intent itent = new Intent(activity, GameActivity.class);
         try {
             gameId = obj.getJSONObject("response").getString("gameId");
             //TODO set settings
         }catch(JSONException e){};
-        if(!GameState.GAME_RUNNING) {
-        	activity.startActivity(itent);
-        }
-        else {
-        	GameState.resetGameStartTime();
-        }
+        sendLobby();
     }
 
     public void recvSync(JSONObject obj) {
         Log.i("SYNC", obj.toString());
+        Intent itent = new Intent(activity, GameActivity.class);
         ArrayList<RemoteBeacon> beacons = new ArrayList<RemoteBeacon>();
         try {
             JSONArray json_beacons = obj.getJSONObject("response").getJSONArray("beacons");
@@ -202,6 +225,12 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
                 beacons.add(beacon);
             }
         }catch(JSONException e){};
+        if(!GameState.GAME_RUNNING) {
+        	activity.startActivity(itent);
+        }
+//        else {
+//        	GameState.resetGameStartTime();
+//        }
         //((GameActivity)activity).beacons = beacons;
         ServerInterface.beacons.clear();
         ServerInterface.beacons.addAll(beacons);

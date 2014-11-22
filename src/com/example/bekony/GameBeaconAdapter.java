@@ -59,7 +59,8 @@ public class GameBeaconAdapter extends ArrayAdapter<GameBeacon> {
 			playerString = beacon.owner.getId();
 		}
 						
-		tvName.setText(beacon.beacon.getName() + " " + String.format("%.4f", beacon.beacon.getAccuracy()) + " (" + timeSinceCaptured + ")");
+		//tvName.setText(beacon.beacon.getName() + " " + String.format("%.4f", beacon.beacon.getAccuracy()) + " (" + timeSinceCaptured + ")");
+		tvName.setText(beacon.beacon.getMacAddress());
 		tvState.setText(beacon.getState().toString());
 		tvOwnerName.setText(playerString);
 
