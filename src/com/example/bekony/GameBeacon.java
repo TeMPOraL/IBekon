@@ -14,6 +14,14 @@ public class GameBeacon {
 	
 	protected long captureStartTime;
 	
+	public static String getBeaconId(Beacon b) {
+		return b.getMacAddress();
+	}
+	
+	public String getId() {
+		return GameBeacon.getBeaconId(beacon);
+	}
+	
 	public void tick() {
 		//maybe something here one day
 	}
@@ -23,12 +31,12 @@ public class GameBeacon {
 		if(state != GameBeaconState.IN_CAPTURE) {
 			state = GameBeaconState.IN_CAPTURE;
 			captureStartTime = now;
-			ServerInterface.notifyBeginCapture(beacon.getMacAddress());
+			ServerInterface.notifyBeginCapture(getId());
 		}
 		else {
 			if(now - captureStartTime > GameState.BEACON_CAPTURE_TIMEOUT_MSEC) {
 				state = GameBeaconState.CAPTURED;
-				ServerInterface.notifyCaptured(beacon.getMacAddress());
+				ServerInterface.notifyCaptured(getId());
 			}
 		}
 	}

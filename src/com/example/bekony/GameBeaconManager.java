@@ -24,17 +24,17 @@ public class GameBeaconManager {
 	}
 	
 	public GameBeacon getGameBeaconFromBeacon(Beacon b) {
-		GameBeacon gb = beacons.get(b.getMacAddress());
+		GameBeacon gb = beacons.get(GameBeacon.getBeaconId(b));
 		if(gb == null) {
 			registerBeacon(b);
-			gb = beacons.get(b.getMacAddress());
+			gb = beacons.get(GameBeacon.getBeaconId(b));
 		}
 		gb.setBeacon(b); //this is evil.
 		return gb;
 	}
 	
 	public void registerBeacon(Beacon b) {
-		beacons.put(b.getMacAddress(), new GameBeacon(b));
+		beacons.put(GameBeacon.getBeaconId(b), new GameBeacon(b));
 	}
 	
 	public void onBeaconSeen(Beacon b) {
