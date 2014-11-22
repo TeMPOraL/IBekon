@@ -106,6 +106,10 @@ public class GameBeaconManager {
 		//return false; //uncomment to enable filtering
 		return true;
 	}
+	
+	public void syncStateWithServer() {
+		
+	}
 
 
 }

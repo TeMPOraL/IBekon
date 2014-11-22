@@ -32,6 +32,8 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
 
     private String playerId;
     static private SocketTask task;
+    
+    private boolean alreadyRunning = false;
 
     static public SocketTask getSocketTask() {
         return task;
@@ -159,8 +161,14 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
         Intent itent = new Intent(activity, GameActivity.class);
         try {
             gameId = obj.getJSONObject("response").getString("gameId");
+            //TODO set settings
         }catch(JSONException e){};
-        activity.startActivity(itent);
+        if(!GameState.GAME_RUNNING) {
+        	activity.startActivity(itent);
+        }
+        else {
+        	GameState.resetGameStartTime();
+        }
     }
 
     public void recvHostGameInfo(JSONObject obj) {
@@ -168,8 +176,14 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
         Intent itent = new Intent(activity, GameActivity.class);
         try {
             gameId = obj.getJSONObject("response").getString("gameId");
+            //TODO set settings
         }catch(JSONException e){};
-        activity.startActivity(itent);
+        if(!GameState.GAME_RUNNING) {
+        	activity.startActivity(itent);
+        }
+        else {
+        	GameState.resetGameStartTime();
+        }
     }
 
     public void recvSync(JSONObject obj) {
@@ -180,15 +194,17 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
             for(int i=0; i < json_beacons.length(); i++){
                 JSONObject json_beacon = json_beacons.getJSONObject(i);
                 RemoteBeacon beacon = new RemoteBeacon();
-                beacon.id = json_beacon.getString("beaconId");
-                beacon.state = json_beacon.getString("captured");
-                beacon.owner = json_beacon.getString("owner");
-                beacon.currentCapturingTime = json_beacon.getInt("currentCapturingTime");
-                beacon.movementLockTime = json_beacon.getInt("movementLockTime");
+                beacon.id = json_beacon.getString("beaconId"); //mac
+                beacon.state = json_beacon.getString("captured"); //'capture' / 'inCapture'
+                beacon.owner = json_beacon.getString("owner"); //player id
+                beacon.currentCapturingTime = json_beacon.getInt("currentCapturingTime"); //5
+                beacon.movementLockTime = json_beacon.getInt("movementLockTime"); //N/A
                 beacons.add(beacon);
             }
         }catch(JSONException e){};
-        ((GameActivity)activity).beacons = beacons;
+        //((GameActivity)activity).beacons = beacons;
+        ServerInterface.beacons.clear();
+        ServerInterface.beacons.addAll(beacons);
     }
 
     public void sendCaptured(RemoteBeacon beacon) {

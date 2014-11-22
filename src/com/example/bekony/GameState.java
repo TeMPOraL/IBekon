@@ -25,5 +25,8 @@ public class GameState {
 	
 	public static boolean GAME_RUNNING = false;
 
-	
+	public static void resetGameStartTime() {
+		GAME_START_TIME_MSEC = android.os.SystemClock.elapsedRealtime();
+        GAME_END_TIME_MSEC = GAME_START_TIME_MSEC + GAME_DURATION_MSEC;
+	}
 }

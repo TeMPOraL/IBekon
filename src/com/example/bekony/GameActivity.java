@@ -48,9 +48,8 @@ public class GameActivity extends Activity {
         gameBeaconManager = new GameBeaconManager();
                 
         GameState.CURRENT_PLAYER = new Player("Maka Paka");
-        GameState.GAME_START_TIME_MSEC = android.os.SystemClock.elapsedRealtime();
-        GameState.GAME_END_TIME_MSEC = GameState.GAME_START_TIME_MSEC + GameState.GAME_DURATION_MSEC;
         GameState.GAME_RUNNING = true;
+        GameState.resetGameStartTime();
         
         //GAME INITIALIZATION ENDS HERE
         
@@ -59,10 +58,12 @@ public class GameActivity extends Activity {
         final TextView playerScore = (TextView)findViewById(R.id.score);
         final TextView playerScoreGain = (TextView)findViewById(R.id.scoreGain);
         final TextView countdown = (TextView)findViewById(R.id.timeLeft);
+        TextView serverMsg = (TextView)findViewById(R.id.serverMessage);
         
         playerName.setText(GameState.CURRENT_PLAYER.getId());
         playerScore.setText(Integer.toString(GameState.CURRENT_PLAYER.getScore()));
         playerScoreGain.setText("+9000/s");
+        serverMsg.setText(socketTask.gameId);
         
         //UI update
         final Handler h = new Handler();
