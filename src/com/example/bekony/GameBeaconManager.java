@@ -16,6 +16,14 @@ public class GameBeaconManager {
 	
 	protected List<String> allowedBeacons = new ArrayList<String>();
 	
+	public GameBeaconManager() {
+		allowedBeacons.add("CB:07:48:2C:2F:AB");
+		allowedBeacons.add("DD:99:6F:92:0E:DF");
+		allowedBeacons.add("DD:5D:BA:6E:B1:F7");
+		allowedBeacons.add("D0:15:D7:26:45:DC");
+		allowedBeacons.add("FD:C1:2B:94:05:7E");
+	}
+	
 	TextView hello;
 
 	public int computeTotalScoreGain() {
@@ -103,8 +111,35 @@ public class GameBeaconManager {
 				return true;
 			}
 		}
-		//return false; //uncomment to enable filtering
-		return true;
+		return false; //uncomment to enable filtering
+		//return true;
+	}
+	
+	public void updateABeacon(RemoteBeacon b) {
+		GameBeacon gb = beacons.get(b.id);
+		if(gb != null) {
+			if(b.owner.equals(GameState.CURRENT_PLAYER.getId())) {
+				if(b.state.equals("inCapture")) {
+					gb.setState(GameBeaconState.CAPTURING);
+				}
+				else {
+					gb.setState(GameBeaconState.OWNED);
+				}
+			}
+			else if(b.owner.equals("neutral")) {
+				if(b.state.equals("inCapture")) {
+					if(gb.getState() != GameBeaconState.CAPTURING) {
+						gb.setState(GameBeaconState.UNDER_ATTACK);
+					}
+				}
+				else {
+					gb.setState(GameBeaconState.NEUTRAL);
+				}
+			}
+			else if(b.owner != null) {
+				gb.setState(GameBeaconState.ENEMY);
+			}
+		}
 	}
 	
 	public void syncStateWithServer() {

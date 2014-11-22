@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -47,7 +48,7 @@ public class GameActivity extends Activity {
         //I know I should abstract it out to a function, but I'm too sleepy.
         gameBeaconManager = new GameBeaconManager();
                 
-        GameState.CURRENT_PLAYER = new Player("Maka Paka");
+        GameState.CURRENT_PLAYER = new Player(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
         GameState.GAME_RUNNING = true;
         GameState.resetGameStartTime();
         
@@ -73,6 +74,9 @@ public class GameActivity extends Activity {
         		runOnUiThread(new Runnable() {
         			@Override
         			public void run() {
+        				for(RemoteBeacon rb : ServerInterface.beacons) {
+        					gameBeaconManager.updateABeacon(rb);
+        				}
         				if(GameState.CURRENT_PLAYER.timeToIncrementScore()) {
         					GameState.CURRENT_PLAYER.incrementScore(gameBeaconManager.computeTotalScoreGain());
         					playerScore.setText(Integer.toString(GameState.CURRENT_PLAYER.getScore()));
