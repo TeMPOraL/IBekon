@@ -161,11 +161,23 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
     	try {
     		JSONObject obj = new JSONObject();
     		JSONArray HARDCODED_BEACONS = new JSONArray();
-    		HARDCODED_BEACONS.put("CB:07:48:2C:2F:AB");
-    		HARDCODED_BEACONS.put("DD:99:6F:92:0E:DF");
-    		HARDCODED_BEACONS.put("DD:5D:BA:6E:B1:F7");
-    		HARDCODED_BEACONS.put("D0:15:D7:26:45:DC");
-    		HARDCODED_BEACONS.put("FD:C1:2B:94:05:7E");
+    		
+    		JSONObject m1 = new JSONObject();
+    		JSONObject m2 = new JSONObject();
+    		JSONObject m3 = new JSONObject();
+    		JSONObject m4 = new JSONObject();
+    		JSONObject m5 = new JSONObject();
+    		m1.put("beaconId", "CB:07:48:2C:2F:AB");
+    		m2.put("beaconId", "DD:99:6F:92:0E:DF");
+    		m3.put("beaconId", "DD:5D:BA:6E:B1:F7");
+    		m4.put("beaconId", "D0:15:D7:26:45:DC");
+    		m5.put("beaconId", "FD:C1:2B:94:05:7E");
+    		
+    		HARDCODED_BEACONS.put(m1);
+    		HARDCODED_BEACONS.put(m2);
+    		HARDCODED_BEACONS.put(m3);
+    		HARDCODED_BEACONS.put(m4);
+    		HARDCODED_BEACONS.put(m5);
     		obj.put("beacons", HARDCODED_BEACONS);
     		sendCommand("lobby_update", obj);
     	}catch(Exception e) {

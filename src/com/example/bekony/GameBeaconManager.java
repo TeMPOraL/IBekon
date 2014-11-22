@@ -137,7 +137,12 @@ public class GameBeaconManager {
 				}
 			}
 			else if(b.owner != null) {
-				gb.setState(GameBeaconState.ENEMY);
+				if(b.state.equals("inCapture")) {
+					gb.setState(GameBeaconState.UNDER_ATTACK);
+				}
+				else {
+					gb.setState(GameBeaconState.ENEMY);
+				}
 			}
 		}
 	}
