@@ -1,0 +1,151 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.firemark.socket.HostActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Host"
+        android:id="@+id/header"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/beaconDelay"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/header"
+        android:layout_toRightOf="@+id/label_0"
+        android:layout_toEndOf="@+id/label_0"
+        android:layout_marginTop="63dp"
+        android:text="10"
+        android:inputType="number"
+        android:singleLine="true"
+        android:numeric="decimal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Timeout of beacon"
+        android:id="@+id/label_0"
+        android:layout_alignTop="@+id/beaconDelay"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/goneTime"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/beaconDelay"
+        android:layout_toRightOf="@+id/label_0"
+        android:layout_toEndOf="@+id/label_0"
+        android:layout_marginTop="19dp"
+        android:text="120"
+        android:inputType="number"
+        android:singleLine="true"
+        android:numeric="integer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Time of round"
+        android:id="@+id/label_1"
+        android:layout_alignTop="@+id/goneTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/victoryPoints"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/goneTime"
+        android:layout_toRightOf="@+id/label_0"
+        android:layout_toEndOf="@+id/label_0"
+        android:layout_marginTop="19dp"
+        android:text="1000"
+        android:inputType="number"
+        android:singleLine="true"
+        android:numeric="integer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Score to Victory"
+        android:id="@+id/label_2"
+        android:layout_alignTop="@+id/victoryPoints"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pointsPerTick"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/victoryPoints"
+        android:layout_toRightOf="@+id/label_0"
+        android:layout_toEndOf="@+id/label_0"
+        android:layout_marginTop="19dp"
+        android:text="10"
+        android:inputType="number"
+        android:singleLine="true"
+        android:numeric="integer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Get points per tick"
+        android:id="@+id/label_3"
+        android:layout_alignTop="@+id/pointsPerTick"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tickPeriod"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/pointsPerTick"
+        android:layout_toRightOf="@+id/label_0"
+        android:layout_toEndOf="@+id/label_0"
+        android:layout_marginTop="19dp"
+        android:inputType="number"
+        android:text="10"
+        android:singleLine="true"
+        android:numeric="decimal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tick period"
+        android:id="@+id/label_4"
+        android:layout_alignTop="@+id/tickPeriod"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Create game"
+        android:id="@+id/btnHost"
+        android:onClick="btnHostClick"
+        android:layout_toRightOf="@+id/label_4"
+        android:layout_marginTop="52dp"
+        android:layout_below="@+id/tickPeriod"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>
