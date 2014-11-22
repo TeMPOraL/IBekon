@@ -41,7 +41,8 @@ public class MainActivity extends Activity {
         gameBeaconManager = new GameBeaconManager();
                 
         GameState.CURRENT_PLAYER = new Player("Maka Paka");
-        
+        GameState.GAME_START_TIME_MSEC = android.os.SystemClock.elapsedRealtime();
+        GameState.GAME_END_TIME_MSEC = GameState.GAME_START_TIME_MSEC + GameState.GAME_DURATION_MSEC;
         GameState.GAME_RUNNING = true;
         
         //GAME INITIALIZATION ENDS HERE
@@ -50,6 +51,7 @@ public class MainActivity extends Activity {
         TextView playerName = (TextView)findViewById(R.id.playerName);
         final TextView playerScore = (TextView)findViewById(R.id.score);
         final TextView playerScoreGain = (TextView)findViewById(R.id.scoreGain);
+        final TextView countdown = (TextView)findViewById(R.id.timeLeft);
         
         playerName.setText(GameState.CURRENT_PLAYER.getId());
         playerScore.setText(Integer.toString(GameState.CURRENT_PLAYER.getScore()));
@@ -67,6 +69,7 @@ public class MainActivity extends Activity {
         					GameState.CURRENT_PLAYER.incrementScore(gameBeaconManager.computeTotalScoreGain());
         					playerScore.setText(Integer.toString(GameState.CURRENT_PLAYER.getScore()));
         				}
+    					countdown.setText(TimeUtils.countdownTimeStringFromCurrentAndEndTimes(GameState.GAME_END_TIME_MSEC, android.os.SystemClock.elapsedRealtime()));
         			}
         		});
         		if(GameState.GAME_RUNNING) {
