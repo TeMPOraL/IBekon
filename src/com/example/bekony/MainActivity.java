@@ -38,11 +38,19 @@ public class MainActivity extends Activity {
         //GAME INITIALIZATION STARTS HERE
         //I know I should abstract it out to a function, but I'm too sleepy.
         gameBeaconManager = new GameBeaconManager();
-        gameBeaconManager.init((TextView)findViewById(R.id.hello));
-        
+                
         GameState.CURRENT_PLAYER = new Player("Maka Paka");
         
         //GAME INITIALIZATION ENDS HERE
+        
+        //UI INIT
+        TextView playerName = (TextView)findViewById(R.id.playerName);
+        TextView playerScore = (TextView)findViewById(R.id.score);
+        final TextView playerScoreGain = (TextView)findViewById(R.id.scoreGain);
+        
+        playerName.setText(GameState.CURRENT_PLAYER.getId());
+        playerScore.setText(Integer.toString(GameState.CURRENT_PLAYER.getScore()));
+        playerScoreGain.setText("+9000/s");
                 
         final GameBeaconAdapter adapter = new GameBeaconAdapter(this, new ArrayList<GameBeacon>());
         ListView l = (ListView)findViewById(R.id.beaconView);
@@ -71,6 +79,8 @@ public class MainActivity extends Activity {
             		public void run() {
             			adapter.clear();
             			adapter.addAll(gameBeaconManager.getBeacons());
+            			int gain = gameBeaconManager.computeTotalScoreGain();
+            			playerScoreGain.setText(((gain >= 0) ? "+" : "-") + Integer.toString(Math.abs(gain)));
             		}
             	});
             	System.out.println("onBeaconsUpdated");

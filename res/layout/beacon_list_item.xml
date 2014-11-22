@@ -3,17 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    
-   <TextView
-      android:id="@+id/tvBeaconName"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:text="Name" />
 
-   <TextView
-       android:id="@+id/tvBeaconState"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="State" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/tvBeaconName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tvBeaconState"
+            android:text="@string/beacon_name" />
+
+        <TextView
+            android:id="@+id/tvBeaconState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="State"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <TextView
+            android:id="@+id/tvOwnerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tvBeaconName"
+            android:layout_alignBottom="@+id/tvBeaconName"
+            android:layout_alignParentRight="true"
+            android:text="@string/player_name"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </RelativeLayout>
 
 </LinearLayout>

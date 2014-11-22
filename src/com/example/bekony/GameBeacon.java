@@ -14,6 +14,8 @@ public class GameBeacon {
 	
 	protected long captureStartTime;
 	
+	protected int scoreGain = 10;
+	
 	public static String getBeaconId(Beacon b) {
 		return b.getMacAddress();
 	}
@@ -64,5 +66,17 @@ public class GameBeacon {
 	
 	public void setBeacon(Beacon b) {
 		beacon = b;
+	}
+	
+	public int getScoreGain() {
+		return scoreGain;
+	}
+	
+	public void setScoreGain(int gain) {
+		scoreGain = gain;
+	}
+
+	public Player getOwner() {
+		return owner;
 	}
 }

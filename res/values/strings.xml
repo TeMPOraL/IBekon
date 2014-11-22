@@ -4,5 +4,11 @@
     <string name="app_name">bekony</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="player_name">Player Name</string>
+    <string name="score">Score</string>
+    <string name="score_gain">Score Gain</string>
+    <string name="server_message">Server Message</string>
+    <string name="time_left">00:00</string>
+    <string name="beacon_name">Beacon Name</string>
 
 </resources>

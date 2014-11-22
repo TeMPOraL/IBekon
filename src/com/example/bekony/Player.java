@@ -11,4 +11,8 @@ public class Player {
 	public String getId() {
 		return name;
 	}
+
+	public int getScore() {
+		return score;
+	}
 }

@@ -17,10 +17,18 @@ public class GameBeaconManager {
 	protected List<String> allowedBeacons = new ArrayList<String>();
 	
 	TextView hello;
-	
-	public void init(TextView t) {
-		hello = t;
-		hello.setText("INIT!");
+
+	public int computeTotalScoreGain() {
+		int gain = 0;
+		List <GameBeacon> beacons = getBeacons();
+		
+		for(GameBeacon b : beacons) {
+			if(b.getOwner() == GameState.CURRENT_PLAYER) {
+				gain += b.getScoreGain();
+			}
+		}
+		
+		return gain;
 	}
 	
 	public GameBeacon getGameBeaconFromBeacon(Beacon b) {

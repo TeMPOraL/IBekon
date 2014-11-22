@@ -9,17 +9,57 @@
     tools:context="com.example.bekony.MainActivity" >
 
     <TextView
-        android:id="@+id/hello"
+        android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignRight="@+id/beaconView"
+        android:text="@string/score"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/playerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/score"
+        android:layout_alignLeft="@+id/beaconView"
+        android:text="@string/player_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/scoreGain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/score"
+        android:layout_below="@+id/score"
+        android:text="@string/score_gain"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/serverMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scoreGain"
+        android:layout_centerHorizontal="true"
+        android:text="@string/server_message"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ListView
         android:id="@+id/beaconView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/hello"
-        android:layout_alignTop="@+id/hello" >
+        android:layout_width="wrap_content"
+        android:layout_height="356dp"
+        android:layout_above="@+id/timeLeft"
+        android:layout_below="@+id/serverMessage"
+        android:layout_centerHorizontal="true" >
+
     </ListView>
+
+    <TextView
+        android:id="@+id/timeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/time_left"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
