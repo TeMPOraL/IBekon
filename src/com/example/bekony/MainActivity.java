@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
         items.add("Maka");
         items.add("Paka");
         
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        final GameBeaconAdapter adapter = new GameBeaconAdapter(this, new ArrayList<GameBeacon>());
         ListView l = (ListView)findViewById(R.id.beaconView);
         l.setAdapter(adapter);
         
@@ -68,10 +68,9 @@ public class MainActivity extends Activity {
             	runOnUiThread(new Runnable() {
             		@Override
             		public void run() {
-            			ListView l = (ListView)findViewById(R.id.beaconView);
-            			
+            			adapter.clear();
+            			adapter.addAll(gameBeaconManager.getBeacons());
             		}
-            		
             	});
             	System.out.println("onBeaconsUpdated");
             }

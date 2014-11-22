@@ -7,8 +7,20 @@ public class GameBeacon {
 		beacon = b;
 	}
 
-	protected GameBeaconState state;
+	protected GameBeaconState state = GameBeaconState.CAPTURED;
 	protected Player owner;	//nil = uncaptured
 	
 	protected Beacon beacon;
+	
+	public GameBeaconState getState() {
+		return state;
+	}
+
+	public void setState(GameBeaconState newState) {
+		state = newState;
+	}
+	
+	public void setOwner(Player newOwner) {
+		owner = newOwner;
+	}
 }

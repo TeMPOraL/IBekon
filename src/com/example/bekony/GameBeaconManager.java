@@ -1,5 +1,6 @@
 package com.example.bekony;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
@@ -22,6 +23,15 @@ public class GameBeaconManager {
 		beacons = new Hashtable<String, GameBeacon>();
 	}
 	
+	public GameBeacon getGameBeaconFromBeacon(Beacon b) {
+		GameBeacon gb = beacons.get(b.getMacAddress());
+		if(gb == null) {
+			registerBeacon(b);
+			gb = beacons.get(b.getMacAddress());
+		}
+		return gb;
+	}
+	
 	public void registerBeacon(Beacon b) {
 		beacons.put(b.getMacAddress(), new GameBeacon(b));
 	}
@@ -31,13 +41,9 @@ public class GameBeaconManager {
 	}
 	
 	public void onBeaconInCaptureRange(Beacon b) {
-		GameBeacon gb = beacons.get(b.getMacAddress());
-		if(gb == null) {
-			onBeaconSeen(b);
-		}
-		else {
-			
-		}
+		GameBeacon gb = getGameBeaconFromBeacon(b);
+		//TODO comm with server
+		gb.setState(GameBeaconState.IN_CAPTURE);
 //		if(b.isOwnedBy(me)) {
 			
 //		}
@@ -46,8 +52,13 @@ public class GameBeaconManager {
 //		}
 	}
 	
-	public Enumeration<GameBeacon> getBeacons() {
-		return beacons.elements();
+	public List<GameBeacon> getBeacons() {
+		List<GameBeacon> beaconsList =  new ArrayList<GameBeacon>();
+		Enumeration<GameBeacon> currentBeacons = beacons.elements();
+		while(currentBeacons.hasMoreElements()) {
+			beaconsList.add(currentBeacons.nextElement());
+		}
+		return beaconsList;
 	}
 
 	public void onBeaconAppeared(Beacon beacon) {
@@ -59,9 +70,9 @@ public class GameBeaconManager {
 		System.out.println("UPDATED");
 		for(Beacon b : beacons) {
 			System.out.println("BEACON " + b.getMacAddress() + " " + b.getName() + " " + b.getMajor() + " " + b.getMinor() + " " + b.getProximity().toString());
-			if(b.getProximity() == Proximity.IMMEDIATE) {
+//			if(b.getProximity() == Proximity.IMMEDIATE) {
 				onBeaconInCaptureRange(b);
-			}
+//			}
 		}
 	}
 }
