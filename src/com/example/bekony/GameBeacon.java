@@ -23,16 +23,21 @@ public class GameBeacon {
 		if(state != GameBeaconState.IN_CAPTURE) {
 			state = GameBeaconState.IN_CAPTURE;
 			captureStartTime = now;
+			ServerInterface.notifyBeginCapture(beacon.getMacAddress());
 		}
 		else {
 			if(now - captureStartTime > GameState.BEACON_CAPTURE_TIMEOUT_MSEC) {
 				state = GameBeaconState.CAPTURED;
-				//send message to server
+				ServerInterface.notifyCaptured(beacon.getMacAddress());
 			}
 		}
 	}
 	
 	public void notCapturing() {
+		state = GameBeaconState.CAPTURED;
+	}
+	
+	public void abortCapture() {
 		state = GameBeaconState.CAPTURED;
 	}
 	
