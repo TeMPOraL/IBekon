@@ -6,6 +6,8 @@ import com.kontakt.sdk.android.connection.OnServiceBoundListener;
 import com.kontakt.sdk.android.device.Region;
 import com.kontakt.sdk.android.manager.BeaconManager;
 import com.kontakt.sdk.android.device.Beacon;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -15,6 +17,8 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +40,14 @@ public class MainActivity extends Activity {
         gameBeaconManager.init((TextView)findViewById(R.id.hello));
         System.out.println("YO!");
         
+        List<String> items = new ArrayList<String>();
+        items.add("Maka");
+        items.add("Paka");
+        
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        ListView l = (ListView)findViewById(R.id.beaconView);
+        l.setAdapter(adapter);
+        
         beaconManager = BeaconManager.newInstance(this);
         beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
@@ -53,6 +65,14 @@ public class MainActivity extends Activity {
             @Override
             public void onBeaconsUpdated(final Region region, final List<Beacon> beacons) {
             	gameBeaconManager.onBeaconUpdated(beacons);
+            	runOnUiThread(new Runnable() {
+            		@Override
+            		public void run() {
+            			ListView l = (ListView)findViewById(R.id.beaconView);
+            			
+            		}
+            		
+            	});
             	System.out.println("onBeaconsUpdated");
             }
 
