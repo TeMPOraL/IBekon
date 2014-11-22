@@ -9,6 +9,7 @@ public class GameBeacon {
 
 	protected GameBeaconState state = GameBeaconState.CAPTURED;
 	protected Player owner = null;	//nil = uncaptured
+	protected Player attacker = null;
 	
 	protected Beacon beacon;
 	
