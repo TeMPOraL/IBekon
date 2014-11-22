@@ -1,4 +1,4 @@
-package com.example.firemark.socket;
+package com.example.bekony;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+
 
 
 public class HostActivity extends Activity {
@@ -47,7 +48,7 @@ public class HostActivity extends Activity {
         settings.pointsPerTrick = getInt(R.id.pointsPerTick);
         settings.tickPeriod = getInt(R.id.tickPeriod);
 
-        ArrayList<Beacon> beacons = new ArrayList<Beacon>();
+        ArrayList<RemoteBeacon> beacons = new ArrayList<RemoteBeacon>();
 
         socketTask.sendHost(settings, beacons);
     }

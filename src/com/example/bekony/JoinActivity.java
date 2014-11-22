@@ -1,4 +1,5 @@
-package com.example.firemark.socket;
+package com.example.bekony;
+
 
 import android.app.Activity;
 import android.os.Bundle;

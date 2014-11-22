@@ -1,4 +1,4 @@
-package com.example.firemark.socket; /**
+package com.example.bekony; /**
  * Created by firemark on 22.11.14.
  */
 
@@ -113,7 +113,7 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
         }
     }
 
-    public void sendHost(GameSettings gameSettings, ArrayList<Beacon> beacons) {
+    public void sendHost(GameSettings gameSettings, ArrayList<RemoteBeacon> beacons) {
         Log.i("SocketTask", "HOST");
         try {
             JSONObject obj = new JSONObject();
@@ -125,7 +125,7 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
             json_settings.put("pointsPerTrick", gameSettings.pointsPerTrick);
             json_settings.put("tickPeriod", gameSettings.tickPeriod);
 
-            for(Beacon beacon: beacons){
+            for(RemoteBeacon beacon: beacons){
                 JSONObject json_beacon = new JSONObject();
                 json_beacon.put("beaconId", beacon.id);
                 //json_beacon.put("alias", beacon.alias);
@@ -174,12 +174,12 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
 
     public void recvSync(JSONObject obj) {
         Log.i("SYNC", obj.toString());
-        ArrayList<Beacon> beacons = new ArrayList<Beacon>();
+        ArrayList<RemoteBeacon> beacons = new ArrayList<RemoteBeacon>();
         try {
             JSONArray json_beacons = obj.getJSONObject("response").getJSONArray("beacons");
             for(int i=0; i < json_beacons.length(); i++){
                 JSONObject json_beacon = json_beacons.getJSONObject(i);
-                Beacon beacon = new Beacon();
+                RemoteBeacon beacon = new RemoteBeacon();
                 beacon.id = json_beacon.getString("beaconId");
                 beacon.state = json_beacon.getString("captured");
                 beacon.owner = json_beacon.getString("owner");
@@ -191,7 +191,7 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
         ((GameActivity)activity).beacons = beacons;
     }
 
-    public void sendCaptured(Beacon beacon) {
+    public void sendCaptured(RemoteBeacon beacon) {
         Log.i("SocketTask", "SEND CAPTURED");
         try {
             JSONObject obj = new JSONObject();
@@ -202,7 +202,7 @@ public class SocketTask extends AsyncTask<Void, String, Boolean> {
         }
     }
 
-    public void sendCapture(Beacon beacon) {
+    public void sendCapture(RemoteBeacon beacon) {
         Log.i("SocketTask", "SEND CAPTURE");
         try {
             JSONObject obj = new JSONObject();

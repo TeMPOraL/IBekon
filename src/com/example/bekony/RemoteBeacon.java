@@ -1,6 +1,6 @@
-package com.example.firemark.socket;
+package com.example.bekony;
 
-public class Beacon {
+public class RemoteBeacon {
     String id;
     //String alias;
     String owner;

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".GameActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +24,10 @@
         </activity>
         <service android:name="com.kontakt.sdk.android.manager.BeaconService" android:exported="false"/>
         <service android:name="com.kontakt.sdk.android.manager.ActionService" android:exported="false"/>
+        <meta-data android:name="kontakt.io.API_KEY" android:value="ExamplehgAEjC1Krg5X5tiI9AExample"/>
+        
         <activity
-            android:name="com.example.firemark.socket.MainActivity"
+            android:name="com.example.bekony.MainActivity"
             android:label="@string/app_name" >
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,19 +36,17 @@
             </intent-filter>-->
         </activity>
         <activity
-            android:name="com.example.firemark.socket.JoinActivity"
+            android:name="com.example.bekony.JoinActivity"
             android:label="@string/title_activity_join" >
         </activity>
         <activity
-            android:name="com.example.firemark.socket.HostActivity"
+            android:name="com.example.bekony.HostActivity"
             android:label="@string/title_activity_host" >
         </activity>
         <activity
             android:name="com.example.firemark.socket.GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
-
-        <meta-data android:name="kontakt.io.API_KEY" android:value="ExamplehgAEjC1Krg5X5tiI9AExample"/>
         
     </application>
     

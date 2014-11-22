@@ -1,4 +1,4 @@
-package com.example.firemark.socket;
+package com.example.bekony;
 
 /**
  * Created by firemark on 22.11.14.
