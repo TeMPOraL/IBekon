@@ -52,6 +52,11 @@ public class GameBeaconManager {
 //		}
 	}
 	
+	private void onBeaconOutOfCaptureRange(Beacon b) {
+		GameBeacon gb = getGameBeaconFromBeacon(b);
+		gb.setState(GameBeaconState.CAPTURED);
+	}
+	
 	public List<GameBeacon> getBeacons() {
 		List<GameBeacon> beaconsList =  new ArrayList<GameBeacon>();
 		Enumeration<GameBeacon> currentBeacons = beacons.elements();
@@ -70,9 +75,14 @@ public class GameBeaconManager {
 		System.out.println("UPDATED");
 		for(Beacon b : beacons) {
 			System.out.println("BEACON " + b.getMacAddress() + " " + b.getName() + " " + b.getMajor() + " " + b.getMinor() + " " + b.getProximity().toString());
-//			if(b.getProximity() == Proximity.IMMEDIATE) {
+			if(b.getProximity() == Proximity.IMMEDIATE) {
 				onBeaconInCaptureRange(b);
-//			}
+			}
+			else {
+				onBeaconOutOfCaptureRange(b);
+			}
 		}
 	}
+
+
 }
