@@ -32,7 +32,12 @@ public class GameBeaconAdapter extends ArrayAdapter<GameBeacon> {
 			timeSinceCaptured = (GameState.BEACON_CAPTURE_TIMEOUT_MSEC - (android.os.SystemClock.elapsedRealtime() - beacon.captureStartTime)) / 1000;	
 		}
 		
-		tvName.setText(beacon.beacon.getName() + " " + String.format("%.4f", beacon.beacon.getAccuracy()) + " (" + timeSinceCaptured + ") --- ");
+		String playerString = " ";
+		if(beacon.owner != null) {
+			playerString = " [" + beacon.owner.getId() + "] ";
+		}
+		
+		tvName.setText(beacon.beacon.getName() + playerString + String.format("%.4f", beacon.beacon.getAccuracy()) + " (" + timeSinceCaptured + ") --- ");
 		tvState.setText(beacon.getState().toString());
 		
 		return convertView;

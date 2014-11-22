@@ -8,7 +8,7 @@ public class GameBeacon {
 	}
 
 	protected GameBeaconState state = GameBeaconState.CAPTURED;
-	protected Player owner;	//nil = uncaptured
+	protected Player owner = null;	//nil = uncaptured
 	
 	protected Beacon beacon;
 	
@@ -28,7 +28,7 @@ public class GameBeacon {
 	
 	public void capturing() {
 		long now = android.os.SystemClock.elapsedRealtime();
-		if(state != GameBeaconState.IN_CAPTURE) {
+		if(state != GameBeaconState.IN_CAPTURE && owner != GameState.CURRENT_PLAYER) {
 			state = GameBeaconState.IN_CAPTURE;
 			captureStartTime = now;
 			ServerInterface.notifyBeginCapture(getId());
@@ -36,6 +36,7 @@ public class GameBeacon {
 		else {
 			if(now - captureStartTime > GameState.BEACON_CAPTURE_TIMEOUT_MSEC) {
 				state = GameBeaconState.CAPTURED;
+				owner = GameState.CURRENT_PLAYER;
 				ServerInterface.notifyCaptured(getId());
 			}
 		}

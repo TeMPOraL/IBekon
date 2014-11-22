@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,17 +35,22 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        //GAME INITIALIZATION STARTS HERE
+        //I know I should abstract it out to a function, but I'm too sleepy.
         gameBeaconManager = new GameBeaconManager();
         gameBeaconManager.init((TextView)findViewById(R.id.hello));
-        System.out.println("YO!");
         
+        GameState.CURRENT_PLAYER = new Player("Maka Paka");
+        
+        //GAME INITIALIZATION ENDS HERE
+                
         final GameBeaconAdapter adapter = new GameBeaconAdapter(this, new ArrayList<GameBeacon>());
         ListView l = (ListView)findViewById(R.id.beaconView);
         l.setAdapter(adapter);
         
+
         beaconManager = BeaconManager.newInstance(this);
-        //beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
-        beaconManager.setMonitorPeriod(new MonitorPeriod(20*60*1000, 5000));
+        beaconManager.setMonitorPeriod(new MonitorPeriod(20*60*1000, 5000)); //EVEN DIRTIER BATTERY DRAINING HACK!!!
         beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT); //DIRTY DIRTY BATTERY DRAINING HACK
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
