@@ -86,13 +86,25 @@ public class GameBeaconManager {
 
 	public void onBeaconsUpdated(List<Beacon> beacons) {
 		for(Beacon b : beacons) {
-			if(isInCaptureRange(b)) {
-				onBeaconInCaptureRange(b);
-			}
-			else {
-				onBeaconOutOfCaptureRange(b);
+			if(allowedBeacon(b)) {
+				if(isInCaptureRange(b)) {
+					onBeaconInCaptureRange(b);
+				}	
+				else {
+					onBeaconOutOfCaptureRange(b);
+				}
 			}
 		}
+	}
+
+	private boolean allowedBeacon(Beacon b) {
+		for(String s : allowedBeacons) {
+			if(s.equals(GameBeacon.getBeaconId(b))) {
+				return true;
+			}
+		}
+		//return false; //uncomment to enable filtering
+		return true;
 	}
 
 

@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +30,7 @@ public class MainActivity extends Activity {
     private BeaconManager beaconManager;
     
     private GameBeaconManager gameBeaconManager;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,16 +42,40 @@ public class MainActivity extends Activity {
                 
         GameState.CURRENT_PLAYER = new Player("Maka Paka");
         
+        GameState.GAME_RUNNING = true;
+        
         //GAME INITIALIZATION ENDS HERE
         
         //UI INIT
         TextView playerName = (TextView)findViewById(R.id.playerName);
-        TextView playerScore = (TextView)findViewById(R.id.score);
+        final TextView playerScore = (TextView)findViewById(R.id.score);
         final TextView playerScoreGain = (TextView)findViewById(R.id.scoreGain);
         
         playerName.setText(GameState.CURRENT_PLAYER.getId());
         playerScore.setText(Integer.toString(GameState.CURRENT_PLAYER.getScore()));
         playerScoreGain.setText("+9000/s");
+        
+        //UI update
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+        	@Override
+        	public void run() {
+        		runOnUiThread(new Runnable() {
+        			@Override
+        			public void run() {
+        				if(GameState.CURRENT_PLAYER.timeToIncrementScore()) {
+        					GameState.CURRENT_PLAYER.incrementScore(gameBeaconManager.computeTotalScoreGain());
+        					playerScore.setText(Integer.toString(GameState.CURRENT_PLAYER.getScore()));
+        				}
+        			}
+        		});
+        		if(GameState.GAME_RUNNING) {
+        			h.postDelayed(this, GameState.DELAY_BETWEEN_GAME_TICKS);
+        		}
+        	}
+        }
+        
+        , GameState.DELAY_BETWEEN_GAME_TICKS);
                 
         final GameBeaconAdapter adapter = new GameBeaconAdapter(this, new ArrayList<GameBeacon>());
         ListView l = (ListView)findViewById(R.id.beaconView);
