@@ -1,5 +1,5 @@
 package com.example.bekony;
 
 public enum GameBeaconState {
-	CAPTURED, IN_CAPTURE
+	NEUTRAL, OWNED, CAPTURING, UNDER_ATTACK, ENEMY
 }

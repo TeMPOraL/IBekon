@@ -7,9 +7,8 @@ public class GameBeacon {
 		beacon = b;
 	}
 
-	protected GameBeaconState state = GameBeaconState.CAPTURED;
+	protected GameBeaconState state = GameBeaconState.NEUTRAL;
 	protected Player owner = null;	//nil = uncaptured
-	protected Player attacker = null;
 	
 	protected Beacon beacon;
 	
@@ -29,28 +28,49 @@ public class GameBeacon {
 		//maybe something here one day
 	}
 	
+	//--
+	public boolean canBeginCapture() {
+		return (state != GameBeaconState.OWNED) && (state != GameBeaconState.CAPTURING);
+	}
+	
+	public void beginCapture() {
+		captureStartTime = android.os.SystemClock.elapsedRealtime();
+		state = GameBeaconState.CAPTURING;
+		ServerInterface.notifyBeginCapture(getId());
+	}
+	
+	public void finalizeCapture() {
+		state = GameBeaconState.OWNED;
+		owner = GameState.CURRENT_PLAYER;
+		ServerInterface.notifyCaptured(getId());		
+	}
+	
+	//--
 	public void capturing() {
 		long now = android.os.SystemClock.elapsedRealtime();
-		if(state != GameBeaconState.IN_CAPTURE && owner != GameState.CURRENT_PLAYER) {
-			state = GameBeaconState.IN_CAPTURE;
-			captureStartTime = now;
-			ServerInterface.notifyBeginCapture(getId());
+		if(canBeginCapture()) {
+			beginCapture();
 		}
-		else {
-			if(now - captureStartTime > GameState.BEACON_CAPTURE_TIMEOUT_MSEC) {
-				state = GameBeaconState.CAPTURED;
-				owner = GameState.CURRENT_PLAYER;
-				ServerInterface.notifyCaptured(getId());
-			}
+		if(now - captureStartTime > GameState.BEACON_CAPTURE_TIMEOUT_MSEC) {
+			finalizeCapture();
 		}
 	}
 	
 	public void notCapturing() {
-		state = GameBeaconState.CAPTURED;
+		//revert state
+		if(owner == null) {
+			state = GameBeaconState.NEUTRAL;
+		}
+		else if(owner == GameState.CURRENT_PLAYER) {
+			state = GameBeaconState.OWNED;
+		}
+		else {
+			state = GameBeaconState.ENEMY;
+		}
 	}
 	
 	public void abortCapture() {
-		state = GameBeaconState.CAPTURED;
+		state = GameBeaconState.NEUTRAL;
 	}
 	
 	public GameBeaconState getState() {

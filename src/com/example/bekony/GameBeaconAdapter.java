@@ -18,20 +18,20 @@ public class GameBeaconAdapter extends ArrayAdapter<GameBeacon> {
 	}
 	
 	public int computeColorForBeacon(GameBeacon beacon) {
-		int color = 0;
-		if(beacon.state == GameBeaconState.IN_CAPTURE) {
-			color = Color.rgb(255, 102, 0);
+		switch(beacon.state) {
+		case NEUTRAL:
+			return Color.rgb(150, 150, 150);
+		case OWNED:
+			return Color.rgb(0, 127, 0);
+		case CAPTURING:
+			return Color.rgb(255, 102, 0);
+		case UNDER_ATTACK:
+			return Color.rgb(255, 50, 50);
+		case ENEMY:
+			return Color.rgb(46, 8, 84);
+		default:
+			return Color.rgb(0, 0, 255);
 		}
-		else if(beacon.owner == GameState.CURRENT_PLAYER) {
-			color = Color.rgb(0, 127, 0);
-		}
-		else if(beacon.owner != null){
-			color = Color.rgb(255, 50, 50);
-		}
-		else {
-			 color = Color.rgb(150, 150, 150);
-		}
-		return color;
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class GameBeaconAdapter extends ArrayAdapter<GameBeacon> {
 
 		long timeSinceCaptured = 0;
 		
-		if(beacon.getState() == GameBeaconState.IN_CAPTURE) {
+		if(beacon.getState() == GameBeaconState.CAPTURING) {
 			timeSinceCaptured = (GameState.BEACON_CAPTURE_TIMEOUT_MSEC - (android.os.SystemClock.elapsedRealtime() - beacon.captureStartTime)) / 1000;	
 		}
 		
