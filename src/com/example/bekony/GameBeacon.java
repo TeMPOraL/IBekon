@@ -12,6 +12,23 @@ public class GameBeacon {
 	
 	protected Beacon beacon;
 	
+	protected long captureStartTime;
+	
+	public void tick() {
+		//maybe something here one day
+	}
+	
+	public void capturing() {
+		if(state != GameBeaconState.IN_CAPTURE) {
+			state = GameBeaconState.IN_CAPTURE;
+			captureStartTime = android.os.SystemClock.elapsedRealtime();
+		}
+	}
+	
+	public void notCapturing() {
+		state = GameBeaconState.CAPTURED;
+	}
+	
 	public GameBeaconState getState() {
 		return state;
 	}
@@ -22,5 +39,9 @@ public class GameBeacon {
 	
 	public void setOwner(Player newOwner) {
 		owner = newOwner;
+	}
+	
+	public void setBeacon(Beacon b) {
+		beacon = b;
 	}
 }

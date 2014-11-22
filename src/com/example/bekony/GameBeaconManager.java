@@ -12,15 +12,15 @@ import com.kontakt.sdk.core.Proximity;
 
 public class GameBeaconManager {
 	
-	protected Hashtable<String, GameBeacon> beacons;
+	protected Hashtable<String, GameBeacon> beacons = new Hashtable<String, GameBeacon>();
+	
+	protected List<String> allowedBeacons = new ArrayList<String>();
 	
 	TextView hello;
 	
 	public void init(TextView t) {
 		hello = t;
 		hello.setText("INIT!");
-		
-		beacons = new Hashtable<String, GameBeacon>();
 	}
 	
 	public GameBeacon getGameBeaconFromBeacon(Beacon b) {
@@ -29,6 +29,7 @@ public class GameBeaconManager {
 			registerBeacon(b);
 			gb = beacons.get(b.getMacAddress());
 		}
+		gb.setBeacon(b); //this is evil.
 		return gb;
 	}
 	
@@ -43,7 +44,7 @@ public class GameBeaconManager {
 	public void onBeaconInCaptureRange(Beacon b) {
 		GameBeacon gb = getGameBeaconFromBeacon(b);
 		//TODO comm with server
-		gb.setState(GameBeaconState.IN_CAPTURE);
+		gb.capturing();
 //		if(b.isOwnedBy(me)) {
 			
 //		}
@@ -54,7 +55,7 @@ public class GameBeaconManager {
 	
 	private void onBeaconOutOfCaptureRange(Beacon b) {
 		GameBeacon gb = getGameBeaconFromBeacon(b);
-		gb.setState(GameBeaconState.CAPTURED);
+		gb.notCapturing();
 	}
 	
 	public List<GameBeacon> getBeacons() {
@@ -65,17 +66,19 @@ public class GameBeaconManager {
 		}
 		return beaconsList;
 	}
+	
+	public Boolean isInCaptureRange(Beacon b) {
+		return b.getProximity() == Proximity.IMMEDIATE;
+	}
 
 	public void onBeaconAppeared(Beacon beacon) {
 		System.out.println("APPEARED");
 		//here we don't care
 	}
 
-	public void onBeaconUpdated(List<Beacon> beacons) {
-		System.out.println("UPDATED");
+	public void onBeaconsUpdated(List<Beacon> beacons) {
 		for(Beacon b : beacons) {
-			System.out.println("BEACON " + b.getMacAddress() + " " + b.getName() + " " + b.getMajor() + " " + b.getMinor() + " " + b.getProximity().toString());
-			if(b.getProximity() == Proximity.IMMEDIATE) {
+			if(isInCaptureRange(b)) {
 				onBeaconInCaptureRange(b);
 			}
 			else {

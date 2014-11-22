@@ -26,7 +26,13 @@ public class GameBeaconAdapter extends ArrayAdapter<GameBeacon> {
 		TextView tvName = (TextView)convertView.findViewById(R.id.tvBeaconName);
 		TextView tvState = (TextView)convertView.findViewById(R.id.tvBeaconState);
 		
-		tvName.setText(beacon.beacon.getName() + " " + String.format("%.4f", beacon.beacon.getAccuracy()) + " --- ");
+		long timeSinceCaptured = 0;
+		
+		if(beacon.getState() == GameBeaconState.IN_CAPTURE) {
+			timeSinceCaptured = (android.os.SystemClock.elapsedRealtime() - beacon.captureStartTime) / 1000;	
+		}
+		
+		tvName.setText(beacon.beacon.getName() + " " + String.format("%.4f", beacon.beacon.getAccuracy()) + " (" + timeSinceCaptured + ") --- ");
 		tvState.setText(beacon.getState().toString());
 		
 		return convertView;

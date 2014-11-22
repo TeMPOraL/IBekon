@@ -49,8 +49,9 @@ public class MainActivity extends Activity {
         l.setAdapter(adapter);
         
         beaconManager = BeaconManager.newInstance(this);
-        beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
-        beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT);
+        //beaconManager.setMonitorPeriod(MonitorPeriod.MINIMAL);
+        beaconManager.setMonitorPeriod(new MonitorPeriod(20*60*1000, 5000));
+        beaconManager.setForceScanConfiguration(ForceScanConfiguration.DEFAULT); //DIRTY DIRTY BATTERY DRAINING HACK
         beaconManager.registerMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onMonitorStart() {
@@ -64,7 +65,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onBeaconsUpdated(final Region region, final List<Beacon> beacons) {
-            	gameBeaconManager.onBeaconUpdated(beacons);
+            	gameBeaconManager.onBeaconsUpdated(beacons);
             	runOnUiThread(new Runnable() {
             		@Override
             		public void run() {
